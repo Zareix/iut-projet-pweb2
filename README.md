@@ -1,2 +1,8 @@
 # projet-pweb2
- Projet de PWEB - Semestre 4
+ Projet PWEB - Semestre 4
+ 
+ Auteur :
+ - Moïna
+ - Keryann
+ - Raphaël
+ - Charles
