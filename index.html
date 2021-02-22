@@ -11,18 +11,57 @@
     ></script>
 
     <!--jQuery UI-->
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css"
+    />
     <script
       src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
       integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
       crossorigin="anonymous"
     ></script>
 
+    <!--Leaflet-->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+
+    <script src="./scripts/listesPays.js"></script>
     <script src="./scripts/index.js"></script>
     <link rel="stylesheet" href="index.css" />
     <title>Projet PWEB</title>
   </head>
 
   <body>
-    <h1>Hello World !</h1>
+    <h1 class="page-title">Bienvenue !</h1>
+    <div class="main">
+      <form id="search">
+        <input
+          id="street"
+          class="ui-widget ui-corner-all"
+          placeholder="Entrer une rue"
+        /><br />
+        <input
+          id="city"
+          class="ui-widget ui-corner-all"
+          placeholder="Entrer une ville"
+        /><br />
+        <input
+          id="country"
+          class="ui-widget ui-corner-all"
+          placeholder="Entrer un pays"
+        /><br />
+        <button id="btnSearch" type="submit">Rechercher</button>
+      </form>
+      <div id="map1"></div>
+    </div>
   </body>
 </html>
