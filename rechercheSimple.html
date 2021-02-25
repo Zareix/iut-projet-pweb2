@@ -35,27 +35,34 @@
     ></script>
 
     <script src="./scripts/listesPays.js"></script>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/rechercheSimple.js"></script>
     <link rel="stylesheet" href="./styles/index.css" />
-    <link rel="stylesheet" href="./styles/home.css" />
+    <link rel="stylesheet" href="./styles/rechercheSimple.css" />
     <title>Projet PWEB - Recherche simple</title>
   </head>
 
   <body>
-    <h1 class="page-title">Bienvenue !</h1>
-    <div class="main">
-      <div id="choix">
-        <h2>Choisissez un service :</h2>
-        <ul>
-          <li class="ui-widget-content ui-draggable" id="rechercheSimple.html">Recherche simple</li>
-          <li class="ui-widget-content ui-draggable" id="rechercheInversee.html">Recherche inversée</li>
-          <li class="ui-widget-content ui-draggable" id="itineraire.html">Itinéraire</li>
-        </ul>
-      </div>
-      <div id="droppable" class="ui-widget-header">
-        <p>Placez votre choix ici</p>
-      </div>
-      <a class="valider" hidden>Valider</a>
+    <h1 class="page-title"> Service - <span style="font-style: italic;">Recherche simple</span></h1>
+    <div class="mainRechercheSimple">
+      <form id="search">
+        <input
+          id="street"
+          class="ui-widget ui-corner-all"
+          placeholder="Entrer une rue"
+        /><br />
+        <input
+          id="city"
+          class="ui-widget ui-corner-all"
+          placeholder="Entrer une ville"
+        /><br />
+        <input
+          id="country"
+          class="ui-widget ui-corner-all"
+          placeholder="Entrer un pays"
+        /><br />
+        <button id="btnSearch" type="submit">Rechercher</button>
+      </form>
+      <div id="map1"></div>
     </div>
   </body>
 </html>

@@ -1,0 +1,32 @@
+.main {
+  width: 70%;
+  margin: auto;
+  display: grid;
+  justify-content: center;
+  gap: 3em;
+}
+
+#choix{
+    width: 70vh;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 0.5em;
+    border: solid;
+    border-color: lightblue;
+}
+
+#droppable {
+  width: 70vh;
+  height: 150px;
+  padding: 0.5em;
+  float: left;
+  margin: 10px;
+}
+
+ul {
+    width: 80%;
+}
+
+li{
+    margin: 1em;
+}
