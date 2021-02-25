@@ -7,14 +7,14 @@
   gap: 3em;
 }
 
-#choix{
-    width: 70vh;
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-bottom: 0.5em;
-    border: solid;
-    border-color: lightblue;
-    border-radius: 0.5rem;
+#choix {
+  width: 70vh;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 0.5em;
+  border: solid;
+  border-color: lightblue;
+  border-radius: 0.5rem;
 }
 
 #droppable {
@@ -27,22 +27,27 @@
 }
 
 ul {
-    width: 80%;
+  width: 80%;
 }
 
-li{
-    margin: 1em;
+li {
+  margin: 1em;
 }
 
-.valider{
-    width: 3.5em;
-    text-decoration: none;
-    padding: 0.125em 0 0.125em 0;
-    text-align: center;
-    border: solid;
-    border-width: 0.125em;
-    border-color: #3B82F6;
-    border-radius: 0.5rem;
-    background-color: #3B82F6;
-    color: white;
+#valider {
+  width: 3.5em;
+  height: 1em;
+  top: 0;
+  text-decoration: none;
+  padding: 0.125em 0 0.125em 0;
+  text-align: center;
+  border: solid;
+  border-width: 0.125em;
+  border-color: #3b82f6;
+  border-radius: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  transition: width 500ms ease-in-out, height 500ms ease-in-out,
+    top 500ms ease-in-out, background-color 1000ms ease-in-out,
+    border-color 1000ms ease-in-out;
 }

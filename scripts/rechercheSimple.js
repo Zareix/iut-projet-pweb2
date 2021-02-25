@@ -2,6 +2,9 @@ var mymap
 var france
 
 $(() => {
+    $("body").css({
+        opacity : 1
+    })
     mymap = L.map('map1').setView([48.8567, 2.3515], 12);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'PING' }).addTo(mymap);
     $("#search").submit((e) => { e.preventDefault(); submitSearch() });

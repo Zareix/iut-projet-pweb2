@@ -1,3 +1,5 @@
+var toRedirect;
+
 $(() => {
     $("li").draggable({
         revert: "invalid"
@@ -11,7 +13,7 @@ $(() => {
                 .html("Choix effectué !")
             $("a")
                 .show()
-                .attr("href", "pages/" + ui.draggable.attr('id'))
+            toRedirect = "pages/" + ui.draggable.attr('id');
         },
         out: function (event, ui) {
             $(this)
@@ -28,4 +30,23 @@ $(() => {
     });
 
     $("ul").droppable()
+
+    $("#valider").click(() => redirect(toRedirect));
 })
+
+const redirect = (link) => {
+    $("#valider")
+        .css({
+            position: "relative",
+            top: -600,
+            width: window.innerWidth,
+            height: window.innerHeight + 100,
+            backgroundColor: "white",
+            borderColor: "white"
+        })
+        .find("div").fadeOut()
+
+    setTimeout(() =>
+        window.location.replace(link)
+        , 1000);
+}
