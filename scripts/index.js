@@ -11,7 +11,7 @@ $(() => {
                 .html("Choix effectué !")
             $("a")
                 .show()
-                .attr("href", ui.draggable.attr('id'))
+                .attr("href", "pages/" + ui.draggable.attr('id'))
         },
         out: function (event, ui) {
             $(this)
