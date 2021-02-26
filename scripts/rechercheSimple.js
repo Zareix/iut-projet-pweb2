@@ -3,7 +3,7 @@ var france
 
 $(() => {
     $("body").css({
-        opacity : 1
+        opacity: 1
     })
     mymap = L.map('map1').setView([48.8567, 2.3515], 12);
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'PING' }).addTo(mymap);
@@ -45,18 +45,21 @@ submitSearch = () => {
             });
             var marker = L.marker([data[0].lat, data[0].lon]).addTo(mymap);
             marker.bindPopup(`<b>${cityToString(data[0].address) + ", " + data[0].address.country}</b>
-                                        <br>${rue === "" ? "" : data[0].address.house_number + " " + data[0].address.road}`);
+                                        <br>${rue === "" ? "" : (data[0].address.house_number ? data[0].address.house_number : "") + " " + data[0].address.road}`);
             mymap.setView(marker.getLatLng())
         }
     });
 }
 
 cityToString = (address) => {
-    if (address.hamlet) {
+    if (address.hamlet)
         return address.hamlet
-    } else if (address.village) {
+
+    if (address.village)
         return address.village
-    } else if (address.municipality) {
+
+    if (address.municipality)
         return address.municipality
-    } else return address.city
+        
+    return address.city
 }

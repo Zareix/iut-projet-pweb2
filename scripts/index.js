@@ -1,9 +1,13 @@
 var toRedirect;
 
 $(() => {
+    $("body").css("opacity", 1);
+
     $("li").draggable({
         revert: "invalid"
     });
+
+    $("ul").droppable()
     $("#droppable").droppable({
         drop: function (event, ui) {
             $(this)
@@ -11,8 +15,7 @@ $(() => {
                 .addClass("ui-state-highlight")
                 .find("p")
                 .html("Choix effectué !")
-            $("a")
-                .show()
+            $("a").show()
             toRedirect = "pages/" + ui.draggable.attr('id');
         },
         out: function (event, ui) {
@@ -21,15 +24,9 @@ $(() => {
                 .removeClass("ui-state-highlight")
                 .find("p")
                 .html("Placez votre choix ici !")
-
-            $("a")
-                .hide()
-                .attr("disabled", "true")
-
+            $("a").hide()
         }
     });
-
-    $("ul").droppable()
 
     $("#valider").click(() => redirect(toRedirect));
 })
@@ -47,6 +44,6 @@ const redirect = (link) => {
         .find("div").fadeOut()
 
     setTimeout(() =>
-        window.location.replace(link)
+        window.location.href = link
         , 1000);
 }

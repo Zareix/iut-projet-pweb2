@@ -28,10 +28,15 @@
 
 ul {
   width: 80%;
+  display: grid;
+  justify-items: center;
 }
 
 li {
-  margin: 1em;
+  width: 50%;
+  margin: 0.5em;
+  list-style-position: inside;
+  padding-left: 0.5em;
 }
 
 #valider {
