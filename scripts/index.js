@@ -31,7 +31,7 @@ $(() => {
     $("#valider").click(() => redirect(toRedirect));
 })
 
-const redirect = (link) => {
+redirect = (link) => {
     $("#valider")
         .css({
             position: "relative",
