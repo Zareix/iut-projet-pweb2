@@ -1,6 +1,7 @@
 var mymap
 var france
 var museums
+var currentPos
 
 $(() => {
     L.mapquest.key = 'APz6ucyv6DAiq4lYgVfa2d8DSzKdCTaJ'
@@ -20,6 +21,8 @@ $(() => {
     $("#btnSearch").button({
         icon: "ui-icon-search"
     })
+
+    navigator.geolocation.getCurrentPosition((pos) => currentPos = { lat: pos.coords.latitude, lon: pos.coords.longitude })
 })
 
 submitSearch = () => {
@@ -48,12 +51,13 @@ submitSearch = () => {
             data.forEach((museum, index) => {
                 L.marker([museum.lat, museum.lon], {
                     icon: L.mapquest.icons.marker({
-                      primaryColor: '#22407F',
-                      secondaryColor: '#3B5998',
-                      shadow: true,
-                      size: 'md',
-                      symbol: index + 1
-                    })})
+                        primaryColor: '#22407F',
+                        secondaryColor: '#3B5998',
+                        shadow: true,
+                        size: 'md',
+                        symbol: index + 1
+                    })
+                })
                     .addTo(mymap)
                     .bindPopup(markerPopUpToString(museum))
                     .on('click', markerOnClick)
@@ -92,11 +96,15 @@ markerPopUpToString = (data) => `<b>${data.address.tourism}, ${cityToString(data
 <br>${data.address.house_number ? data.address.house_number : ""} ${data.address.road}`
 
 
-markerOnClick = (props) => {
-    console.log(props)
+markerOnClick = (selectedMarker) => {
+    if (currentPos == null) {
+        alert("Impossible de récupérer votre position actuelle")
+        return
+    }
+    // TODO : delete old route
+    // TODO : options for route (see doc)
+    L.mapquest.directions().route({
+        start: currentPos,
+        end: selectedMarker.latlng
+    });
 }
-
-/*L.mapquest.directions().route({
-        start: {lat: 48.85, lon: 2.35},
-        end: {lat: "48.8660456", lon: "2.3145051"}
-    });*/
