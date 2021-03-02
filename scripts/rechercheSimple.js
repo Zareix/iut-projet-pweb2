@@ -34,12 +34,12 @@ submitSearch = () => {
         url: `https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&city=${ville}&country=${pays}${rue === "" ? "" : "&street=" + rue}`,
         data: "data",
         dataType: "json",
-        success: function (data) {
+        success: (data) => {
             if (data.length === 0) {
                 alert("Aucun lieu ne correspond à votre recherche !")
                 return
             }
-            mymap.eachLayer(function (layer) {
+            mymap.eachLayer((layer) => {
                 if (layer instanceof L.Marker)
                     mymap.removeLayer(layer);
             });
@@ -60,6 +60,6 @@ cityToString = (address) => {
 
     if (address.municipality)
         return address.municipality
-        
+
     return address.city
 }
