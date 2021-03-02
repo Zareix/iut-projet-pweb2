@@ -2,11 +2,15 @@ var mymap
 var france
 
 $(() => {
+    L.mapquest.key = 'APz6ucyv6DAiq4lYgVfa2d8DSzKdCTaJ'
     $("body").css({
         opacity: 1
     })
-    mymap = L.map('map1').setView([48.8567, 2.3515], 12);
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: 'PING' }).addTo(mymap);
+    mymap = L.map('map1',{
+        center: [48.85, 2.35],
+        layers: L.mapquest.tileLayer('map'),
+        zoom: 12
+      });
     $("#search").submit((e) => { e.preventDefault(); submitSearch() });
     $("#country").autocomplete({
         source: listePays(),
@@ -15,6 +19,11 @@ $(() => {
     $("#btnSearch").button({
         icon: "ui-icon-search"
     })
+
+    L.mapquest.directions().route({
+        start: '18 rue de monttessuy, France',
+        end: 'One Liberty Plaza, New York, NY 10006'
+      });
 })
 
 submitSearch = () => {
