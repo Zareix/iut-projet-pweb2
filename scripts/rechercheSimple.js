@@ -1,16 +1,17 @@
 var mymap
 var france
+var museums
 
 $(() => {
     L.mapquest.key = 'APz6ucyv6DAiq4lYgVfa2d8DSzKdCTaJ'
     $("body").css({
         opacity: 1
     })
-    mymap = L.map('map1',{
+    mymap = L.map('map1', {
         center: [48.85, 2.35],
         layers: L.mapquest.tileLayer('map'),
         zoom: 12
-      });
+    });
     $("#search").submit((e) => { e.preventDefault(); submitSearch() });
     $("#country").autocomplete({
         source: listePays(),
@@ -19,17 +20,11 @@ $(() => {
     $("#btnSearch").button({
         icon: "ui-icon-search"
     })
-
-    L.mapquest.directions().route({
-        start: '18 rue de monttessuy, France',
-        end: 'One Liberty Plaza, New York, NY 10006'
-      });
 })
 
 submitSearch = () => {
     var ville = $("#city").val();
     var pays = $("#country").val();
-    var rue = $("#street").val();
     if (ville === "") {
         alert("Merci de renseigner une ville");
         return;
@@ -40,22 +35,34 @@ submitSearch = () => {
     }
     $.ajax({
         type: "GET",
-        url: `https://nominatim.openstreetmap.org/search?format=json&limit=1&addressdetails=1&city=${ville}&country=${pays}${rue === "" ? "" : "&street=" + rue}`,
+        url: `https://nominatim.openstreetmap.org/search?format=json&limit=30&addressdetails=1&q=Musées dans+${ville}+${pays}`,
         data: "data",
         dataType: "json",
         success: (data) => {
+            console.log(data);
             if (data.length === 0) {
                 alert("Aucun lieu ne correspond à votre recherche !")
                 return
             }
-            mymap.eachLayer((layer) => {
-                if (layer instanceof L.Marker)
-                    mymap.removeLayer(layer);
+            clearAllMarkers()
+            data.forEach((museum, index) => {
+                L.marker([museum.lat, museum.lon], {
+                    icon: L.mapquest.icons.marker({
+                      primaryColor: '#22407F',
+                      secondaryColor: '#3B5998',
+                      shadow: true,
+                      size: 'md',
+                      symbol: index + 1
+                    })})
+                    .addTo(mymap)
+                    .bindPopup(markerPopUpToString(museum))
+                    .on('click', markerOnClick)
             });
-            var marker = L.marker([data[0].lat, data[0].lon]).addTo(mymap);
-            marker.bindPopup(`<b>${cityToString(data[0].address) + ", " + data[0].address.country}</b>
-                                        <br>${rue === "" ? "" : (data[0].address.house_number ? data[0].address.house_number : "") + " " + data[0].address.road}`);
-            mymap.setView(marker.getLatLng())
+            mymap.setView({
+                lat: data[0].lat,
+                lng: data[0].lon
+            })
+            museums = data;
         }
     });
 }
@@ -72,3 +79,24 @@ cityToString = (address) => {
 
     return address.city
 }
+
+clearAllMarkers = () => {
+    mymap.eachLayer((layer) => {
+        if (layer instanceof L.Marker)
+            mymap.removeLayer(layer);
+    });
+}
+
+
+markerPopUpToString = (data) => `<b>${data.address.tourism}, ${cityToString(data.address)}</b>
+<br>${data.address.house_number ? data.address.house_number : ""} ${data.address.road}`
+
+
+markerOnClick = (props) => {
+    console.log(props)
+}
+
+/*L.mapquest.directions().route({
+        start: {lat: 48.85, lon: 2.35},
+        end: {lat: "48.8660456", lon: "2.3145051"}
+    });*/
