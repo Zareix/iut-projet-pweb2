@@ -2,6 +2,7 @@ var mymap
 var france
 var museums
 var currentPos
+var currentRoute
 
 $(() => {
     L.mapquest.key = 'APz6ucyv6DAiq4lYgVfa2d8DSzKdCTaJ'
@@ -91,6 +92,11 @@ clearAllMarkers = () => {
     });
 }
 
+clearCurrentRoute = () => {
+    if (currentRoute != null)
+        mymap.removeLayer(currentRoute)
+}
+
 
 markerPopUpToString = (data) => `<b>${data.address.tourism}, ${cityToString(data.address)}</b>
 <br>${data.address.house_number ? data.address.house_number : ""} ${data.address.road}`
@@ -101,10 +107,17 @@ markerOnClick = (selectedMarker) => {
         alert("Impossible de récupérer votre position actuelle")
         return
     }
-    // TODO : delete old route
+    clearCurrentRoute()
     // TODO : options for route (see doc)
-    L.mapquest.directions().route({
-        start: currentPos,
-        end: selectedMarker.latlng
-    });
+    L.mapquest.directions()
+        .route({
+            start: currentPos,
+            end: selectedMarker.latlng,
+        }, directionsCallback)
+}
+
+directionsCallback = (error, response) => {
+    currentRoute = L.mapquest.directionsLayer({
+        directionsResponse: response
+    }).addTo(mymap);
 }
