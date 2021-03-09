@@ -60,7 +60,7 @@ submitSearch = () => {
                     })
                 })
                     .addTo(mymap)
-                    .bindPopup(markerPopUpToString(museum))
+                    .bindPopup(musuemToString(museum))
                     .on('click', markerOnClick)
             });
             mymap.setView({
@@ -69,13 +69,11 @@ submitSearch = () => {
             })
             museums = data;
 
-            museums.forEach(adress =>
-                $("#espaceMusees").append( adress.display_name + "<br/>")
+            museums.forEach(museum =>
+                $("#espaceMusees").append("<li>" + musuemToString(museum) + "</li>")
             )
         }
     });
-
-
 }
 
 cityToString = (address) => {
@@ -104,8 +102,7 @@ clearCurrentRoute = () => {
 }
 
 
-markerPopUpToString = (data) => `<b>${data.address.tourism}, ${cityToString(data.address)}</b>
-<br>${data.address.house_number ? data.address.house_number : ""} ${data.address.road}`
+musuemToString = (data) => `<b>${data.address.tourism}, ${cityToString(data.address)}</b>, ${data.address.house_number ? data.address.house_number : ""} ${data.address.road}`
 
 
 markerOnClick = (selectedMarker) => {
