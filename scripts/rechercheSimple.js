@@ -29,7 +29,7 @@ submitSearch = () => {
     var ville = $("#city").val();
     var pays = $("#country").val();
     if (ville === "") {
-        alert("Merci de renseigner une ville");
+        alert("Merci de renseigner une ville ou un établissement");
         return;
     }
     if (pays === "") {
@@ -67,8 +67,14 @@ submitSearch = () => {
                 lng: data[0].lon
             })
             museums = data;
+
+            museums.forEach(adress =>
+                $("#espaceMusees").append( adress.display_name + "<br/>")
+            )
         }
     });
+
+
 }
 
 cityToString = (address) => {
