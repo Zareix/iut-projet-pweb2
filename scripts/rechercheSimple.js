@@ -82,6 +82,9 @@ cityToString = (address) => {
 
     if (address.village)
         return address.village
+        
+    if(adress.town)
+        return adress.town
 
     if (address.municipality)
         return address.municipality
