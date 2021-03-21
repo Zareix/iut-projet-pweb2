@@ -5,16 +5,16 @@ var currentPos
 var currentRoute
 
 $(() => {
+    $("body").css("opacity", "1")
+
     L.mapquest.key = 'APz6ucyv6DAiq4lYgVfa2d8DSzKdCTaJ'
-    $("body").css({
-        opacity: 1
-    })
     mymap = L.map('map1', {
         center: [48.85, 2.35],
         layers: L.mapquest.tileLayer('map'),
         zoom: 12
     });
-    $("#search").submit((e) => { e.preventDefault(); submitSearch() });
+
+    $(".search").submit((e) => { e.preventDefault(); submitSearch() });
     $("#country").autocomplete({
         source: listePays(),
         minLength: 3
@@ -22,9 +22,16 @@ $(() => {
     $("#btnSearch").button({
         icon: "ui-icon-search"
     })
+    $("#vehicule").selectmenu();
 
-    navigator.geolocation.getCurrentPosition((pos) => currentPos = { lat: pos.coords.latitude, lon: pos.coords.longitude })
+    $(".entree").css("width", "100%")
+
+    getCurrentPos()
 })
+
+getCurrentPos = () => {
+    navigator.geolocation.getCurrentPosition((pos) => currentPos = { lat: pos.coords.latitude, lon: pos.coords.longitude })
+}
 
 submitSearch = () => {
     var ville = $("#city").val();
@@ -43,7 +50,6 @@ submitSearch = () => {
         data: "data",
         dataType: "json",
         success: (data) => {
-            console.log(data);
             if (data.length === 0) {
                 alert("Aucun lieu ne correspond à votre recherche !")
                 return
@@ -60,7 +66,7 @@ submitSearch = () => {
                     })
                 })
                     .addTo(mymap)
-                    .bindPopup(musuemToString(museum))
+                    .bindPopup(museumToString(museum))
                     .on('click', markerOnClick)
             });
             mymap.setView({
@@ -70,8 +76,17 @@ submitSearch = () => {
             museums = data;
 
             museums.forEach(museum =>
-                $("#espaceMusees").append("<li>" + musuemToString(museum) + "</li>")
+                $("#espaceMusees").append("<li class='museum'>" + museumToString(museum) + "</li>")
             )
+            $("#espaceMusees").css({
+                borderWidth: "2px",
+                borderStyle: "solid",
+                borderRadius: "20px"
+            })
+            $(".museum")
+                .css({
+                    margin: "1rem",
+                })
         }
     });
 }
@@ -82,9 +97,9 @@ cityToString = (address) => {
 
     if (address.village)
         return address.village
-        
-    if(adress.town)
-        return adress.town
+
+    if (address.town)
+        return address.town
 
     if (address.municipality)
         return address.municipality
@@ -105,7 +120,7 @@ clearCurrentRoute = () => {
 }
 
 
-musuemToString = (data) => `<b>${data.address.tourism}, ${cityToString(data.address)}</b>, ${data.address.house_number ? data.address.house_number : ""} ${data.address.road}`
+museumToString = (data) => `<b>${data.address.tourism}, ${cityToString(data.address)}</b>, ${data.address.house_number ? data.address.house_number : ""} ${data.address.road}`
 
 
 markerOnClick = (selectedMarker) => {
@@ -115,15 +130,58 @@ markerOnClick = (selectedMarker) => {
     }
     clearCurrentRoute()
     // TODO : options for route (see doc)
-    L.mapquest.directions()
-        .route({
-            start: currentPos,
-            end: selectedMarker.latlng,
-        }, directionsCallback)
+    console.log($("#vehicule").val())
+    var routetype = $("#vehicule").val()
+    L.mapquest.directions().route({
+        start: currentPos,
+        end: selectedMarker.latlng,
+        options: {
+            routeType: routetype
+        }
+    }, directionsCallback)
 }
 
 directionsCallback = (error, response) => {
-    currentRoute = L.mapquest.directionsLayer({
-        directionsResponse: response
-    }).addTo(mymap);
+
+    if (response.info.statuscode != 0)
+        alert("Impossible de trouver un chemin vers ce lieu avec ce type de déplacement !")
+    else {
+        indicateDistance(response.route)
+        currentRoute = L.mapquest.directionsLayer({
+            startMarker: {
+                icon: 'circle',
+                iconOptions: {
+                    size: 'sm',
+                    primaryColor: '#000000',
+                    secondaryColor: '#FFFFFF',
+                    symbol: 'D'
+                }
+            },
+            endMarker: {
+                icon: 'via',
+                iconOptions: {
+                    size: 'sm',
+                    primaryColor: '#000000',
+                }
+            },
+            routeRibbon: {
+                color: "#2aa6ce",
+                opacity: 0.9,
+                showTraffic: false
+            },
+            directionsResponse: response
+        }).addTo(mymap);
+    }
+
+}
+
+indicateDistance = (route) => {
+    var distance = route.distance >= 1 ? route.distance + " km" : route.distance * 1000 + " mètres"
+
+    $("#distance")
+        .html("Vous êtes à <b>" + distance + "</b> de ce musée.<br> Vous devriez y arriver en <b>" + route.formattedTime + "</b> (en hh:mm:ss)" )
+        .css({
+            textAlign: "center",
+            marginTop: "1.5rem"
+        });
 }

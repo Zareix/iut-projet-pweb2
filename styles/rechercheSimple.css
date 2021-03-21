@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-#search {
+.search {
   width: 70%;
   height: 25vh;
   text-align: justify;
@@ -29,13 +29,26 @@
   margin-top: 1.5em;
 }
 
+#espaceMusees {
+  width: 70%;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
 @media (max-width: 768px) {
-  .main {
-    grid-template-columns: 1fr;
+  .mainRechercheSimple {
+    display: block;
   }
 
-  #search {
-    width: 90%;
+  .search {
+    width: 100%;
     height: auto;
+  }
+
+  #espaceMusees{
+    width: 80%;
   }
 }

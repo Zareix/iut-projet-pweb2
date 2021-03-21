@@ -39,22 +39,28 @@
   <body>
     <h1 class="page-title" style="font-style: italic">Des musées où vous voulez !</h1>
     <div class="mainRechercheSimple">
-      <form id="search">
+      <form class="search">
         <input
           id="city"
-          class="ui-widget ui-corner-all"
+          class="ui-widget ui-corner-all entree"
           placeholder="Entrer une ville ou un établissement"
         /><br />
         <input
           id="country"
-          class="ui-widget ui-corner-all"
+          class="ui-widget ui-corner-all entree"
           placeholder="Entrer un pays"
         /><br />
+        <label for="vehicule">Comment vous déplacez-vous ?</label>
+        <select id="vehicule" name="vehicule" class="entree">
+          <option value="fastest">En voiture</option>
+          <option value="pedestrian">A pied</option>
+          <option value="bicycle">A vélo</option>
+      </select><br />
         <button id="btnSearch" type="submit">Rechercher</button>
+        <div id="distance"></div>
       </form>
       <div id="map1"></div>
 
     </div>
-
-    <ul id="espaceMusees"></ul>
+    <ol id="espaceMusees"></ol>
 </html>
