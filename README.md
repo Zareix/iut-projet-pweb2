@@ -1,7 +1,7 @@
 # Projet PWEB
 Projet PWEB - Semestre 4
 
-IUT Paris Rives de Seine (Descartes)
+IUT de Paris – Rives de Seine (Descartes)
 
 Auteur :
 - Moïna
